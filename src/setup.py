@@ -25,7 +25,7 @@ fixed_extname = "_"+modname # this shouldn't be changed
 # TODO : specify the sources
 srclist = [swig_ifile]
 srclist.append("src/irr.c")
-srclist.append("src/test.c")
+srclist.append("src/pputil.c")
 
 ext_mod0 = Extension(fixed_extname, sources=srclist)
 

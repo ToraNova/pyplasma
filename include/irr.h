@@ -17,8 +17,6 @@ void test();
  */
 void argtest(int arg1);
 
-//auxiliary tests
-void test0();
 
 #endif
 

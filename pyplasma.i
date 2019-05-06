@@ -4,6 +4,7 @@
 %module pyplasma 
 %{      
         #include "include/irr.h"
+        #include "include/pputil.h"
 %}
 
 /* explicit list of functions to be interfaced */
@@ -11,3 +12,4 @@
 
 /* or just */
 %include "include/irr.h"
+%include "include/pputil.h"
