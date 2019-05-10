@@ -62,14 +62,15 @@ void pputil_test(){
  * their dimensions
  * @params Dmat - input Data matrix to perform ridge regression on
  * @params Tvct - input Target vector to train on
+ * @dsize and tsize are numpy intrinsics, just pass the np array it will absorb 2 params
  * @params xrowsz, xcolsz - the rowsize, colsize of Dmat
  * @params yelmsz, ydimsz - the rowsize, colsize of Tvct
  *
  * this function is now stable. please refrain from editing 10th May 19 - ToraNova
  */
 double *pputil_ridge(
-	double *Dmat, size_t xrowsz, size_t xcolsz,
-	double *Tvct, size_t yelmsz, size_t ydimsz,
+	double *Dmat, int dsize, size_t xrowsz, size_t xcolsz,
+	double *Tvct, int tsize, size_t yelmsz, size_t ydimsz,
 	double lambda
 ){
 	//var declares

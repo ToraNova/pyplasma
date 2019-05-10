@@ -59,8 +59,8 @@ int main(int argc, char *argv[]){
 
 	//real test
 	alpha = pputil_ridge( 
-			xmat, xrowsz, xcolsz,
-			yvct, yelmsz, ydimsz,
+			xmat,0, xrowsz, xcolsz,
+			yvct,0, yelmsz, ydimsz,
 			lambda);
 	//cleanup
 	destr_DoubleReader(mr);

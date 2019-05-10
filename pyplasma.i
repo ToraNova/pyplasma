@@ -3,6 +3,7 @@
 
 %module pyplasma 
 %{      
+        #define SWIG_FILE_WITH_INIT
         #include "include/irr.h"
         #include "include/pputil.h"
 %}
@@ -10,6 +11,15 @@
 /* explicit list of functions to be interfaced */
 /*void wrapper_test(int arg1);*/
 
+/* uses numpy.i typemap*/
+%include "numpy.i"
+
+%init
+%{
+        import_array();
+%}
+
+%apply (double *IN_ARRAY1, int DIM1) {(double *Dmat, int dsize)} 
 /* or just */
 %include "include/irr.h"
 %include "include/pputil.h"
