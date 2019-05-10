@@ -44,7 +44,7 @@ LIBS      := \
 	-L$(PLSROOT)/lib \
 	-lplasma -lcoreblas \
 	-L$(MKLROOT)/lib/intel64 \
-	-lmkl_intel_lp64 -lmkl_core -lmkl_sequential -lm \
+	-lmkl_intel_lp64 -lmkl_core -lmkl_sequential -lmkl_avx2 -lmkl_def -lm \
 	-L$(PRTROOT)/lib \
 	-lprodtools_shared \
 	-lstdc++ 

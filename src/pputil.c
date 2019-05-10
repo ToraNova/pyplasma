@@ -84,7 +84,7 @@ void pputil_ridge(
 
 	//current assumption, ydimsz == 1
 	if(ydimsz > 1)log_err("Warning: untested code for target dim > 1");
-	debug("PyNP ndsize D/T/A %d %d %d\n",dsize,tsize,asize);
+	debug("PyNP ndsize D/T/A %d %d %d",dsize,tsize,asize);
 	
 	//obtain unity matrix
 	symmetricL = linear_obtainUnityST( yelmsz );
