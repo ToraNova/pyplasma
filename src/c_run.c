@@ -58,10 +58,11 @@ int main(int argc, char *argv[]){
 	debug("Splitting via rows as data entires");
 
 	//real test
-	alpha = pputil_ridge( 
+	pputil_ridge( 
 			xmat,0, xrowsz, xcolsz,
 			yvct,0, yelmsz, ydimsz,
-			lambda);
+			lambda,
+                        alpha, 0);
 	//cleanup
 	destr_DoubleReader(mr);
 	free(alpha);

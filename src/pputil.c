@@ -65,20 +65,26 @@ void pputil_test(){
  * @dsize and tsize are numpy intrinsics, just pass the np array it will absorb 2 params
  * @params xrowsz, xcolsz - the rowsize, colsize of Dmat
  * @params yelmsz, ydimsz - the rowsize, colsize of Tvct
+ * @params alpha, int asize is actually a numpy Argout array
  *
+ * note, when using this in C, dsize, tsize and asize can be replaced with 0
+ * when using this in Python, Dmat, dsize is actually a numpy array
+ * similarly for Tvct, tsize and alpha, asize
  * this function is now stable. please refrain from editing 10th May 19 - ToraNova
  */
-double *pputil_ridge(
+void pputil_ridge(
 	double *Dmat, int dsize, size_t xrowsz, size_t xcolsz,
 	double *Tvct, int tsize, size_t yelmsz, size_t ydimsz,
-	double lambda
+	double lambda,
+	double *alpha, int asize
 ){
 	//var declares
-	double *alpha, *symmetricL; //intermediaries
+	double *symmetricL; //intermediaries
 	int rc; //used to store result codes
 
 	//current assumption, ydimsz == 1
 	if(ydimsz > 1)log_err("Warning: untested code for target dim > 1");
+	debug("PyNP ndsize D/T/A %d %d %d\n",dsize,tsize,asize);
 	
 	//obtain unity matrix
 	symmetricL = linear_obtainUnityST( yelmsz );
@@ -161,7 +167,6 @@ double *pputil_ridge(
 
 	plasma_finalize();
 	free(symmetricL);
-	return alpha;
 }
 
 

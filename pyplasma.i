@@ -19,7 +19,11 @@
         import_array();
 %}
 
+/* applying numpy typemaps */
 %apply (double *IN_ARRAY1, int DIM1) {(double *Dmat, int dsize)} 
+%apply (double *IN_ARRAY1, int DIM1) {(double *Tvct, int tsize)} 
+%apply (double *ARGOUT_ARRAY1, int DIM1) {(double *alpha, int asize)}
+
 /* or just */
 %include "include/irr.h"
 %include "include/pputil.h"

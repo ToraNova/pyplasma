@@ -15,10 +15,11 @@
  */
 void pputil_test();
 
-double *pputil_ridge(
+void pputil_ridge(
 	double *Dmat, int dsize, size_t xrowsz, size_t xcolsz,
 	double *Tvct, int tsize, size_t yelmsz, size_t ydimsz,
-	double lambda
+	double lambda,
+	double *alpha, int asize
 );
 
 #endif
