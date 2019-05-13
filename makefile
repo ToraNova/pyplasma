@@ -17,9 +17,9 @@ SOURCES  := $(wildcard $(SRCDIR)/*.c)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=%.o) 
 
 # specify the library paths (the root dir of the lib projects)
-PRTROOT  := /home/cjason/library/prodtools
-MKLROOT  := /opt/intel/mkl
-PLSROOT  := /home/cjason/github/plasma-17.1
+PRTROOT  ?= /home/cjason/library/prodtools
+MKLROOT  ?= /opt/intel/mkl
+PLSROOT  ?= /home/cjason/github/plasma-17.1
 
 # rmb to export this in your env to run the program
 LD_LIBRARY_PATH ?= $(MKLROOT)/lib/intel64:$(PRTROOT)/lib
@@ -39,12 +39,14 @@ LDFLAGS  = -fopenmp -fPIC
 # Prodtools
 # Standards
 # THE ORDER IS VERY IMPORTANT. DO NOT MESS IT UP
+# Error for unable to load avx2.so and def.so fix
+# https://software.intel.com/en-us/forums/intel-distribution-for-python/topic/637997
 ################################################################################
 LIBS      := \
 	-L$(PLSROOT)/lib \
 	-lplasma -lcoreblas \
 	-L$(MKLROOT)/lib/intel64 \
-	-lmkl_intel_lp64 -lmkl_core -lmkl_sequential -lmkl_avx2 -lmkl_def -lm \
+	-lmkl_intel_lp64 -lmkl_core -lmkl_sequential -lmkl_rt -lmkl_def -lm \
 	-L$(PRTROOT)/lib \
 	-lprodtools_shared \
 	-lstdc++ 

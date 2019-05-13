@@ -19,6 +19,7 @@
 
 #include "../include/irr.h"
 #include "../include/pputil.h"
+#include "../include/ridge.h"
 
 //prodtools
 #include "prodtools/csv/reader.h"
@@ -58,10 +59,10 @@ int main(int argc, char *argv[]){
 	debug("Splitting via rows as data entires");
 
 	//real test
-	pputil_ridge( 
+	ridge_solve( 
 			xmat,0, xrowsz, xcolsz,
 			yvct,0, yelmsz, ydimsz,
-			lambda,
+			lambda, 0,
                         alpha, 0);
 	//cleanup
 	destr_DoubleReader(mr);

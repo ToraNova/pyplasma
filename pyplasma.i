@@ -6,6 +6,7 @@
         #define SWIG_FILE_WITH_INIT
         #include "include/irr.h"
         #include "include/pputil.h"
+        #include "include/ridge.h"
 %}
 
 /* explicit list of functions to be interfaced */
@@ -27,3 +28,4 @@
 /* or just */
 %include "include/irr.h"
 %include "include/pputil.h"
+%include "include/ridge.h"

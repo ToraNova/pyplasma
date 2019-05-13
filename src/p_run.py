@@ -9,4 +9,5 @@ if __name__ == "__main__":
 
     print(pyplasma)
     pyplasma.pputil_test()
+    pyplasma.ridge_test()
 
