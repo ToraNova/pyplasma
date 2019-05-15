@@ -43,7 +43,7 @@ int main(int argc, char *argv[]){
 
 	//reader
 	csvreader_DoubleReader *mr = constr_DoubleReader();
-	rc = DoubleReader_readcsv(mr, "/home/cjason/library/python/pysample/datagen/data0.csv",0);
+	rc = DoubleReader_readcsv(mr, "/home/cjason/library/guides/python/pysample/datagen/data0.csv",0);
 	debug("Read RC:%d",rc);
 	rrow = DoubleReader_getRowCount(mr);
 	rcol = DoubleReader_getColCount(mr);
@@ -57,6 +57,8 @@ int main(int argc, char *argv[]){
 
 	DoubleReader_split_mdouble_vcST(mr, xcolsz, xmat, yvct);
 	debug("Splitting via rows as data entires");
+
+        alpha = (double *)calloc( xrowsz * ydimsz, sizeof(double));
 
 	//real test
 	ridge_solve( 

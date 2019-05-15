@@ -94,10 +94,6 @@ void ridge_solve(
 	symmetricL = linear_obtainUnityST( yelmsz );
 	debug("Unity obtained (size:%ld)",yelmsz);
 
-	//allocate memory for alpha 
-	alpha  = (double *)calloc( xrowsz* ydimsz, sizeof(double));
-	debug("alpha array created (%ld/%ld)",xrowsz,ydimsz);
-
 #ifdef EDEBUG
 	//declares the weight array (for debugging only)
 	double *weight;
