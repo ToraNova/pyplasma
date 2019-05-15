@@ -57,6 +57,17 @@ void ridge_test(){
 }
 
 /*
+ * This is to test the ARGOUT capability of swig numpy
+ */
+void ridge_range( double *alpha, int asize ){
+	int i;
+	for(i=0;i<asize;i++){
+		alpha[i] = i;
+	}
+}
+	
+
+/*
  * perform Ridge Regression on the input Dmat
  * and Tvct. they're both 1D representation
  * of the double array, thus, please specify also

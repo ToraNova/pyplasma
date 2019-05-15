@@ -66,6 +66,7 @@ int main(int argc, char *argv[]){
 			yvct,0, yelmsz, ydimsz,
 			lambda, 0,
                         alpha, 0);
+        suprint_doublearrST(alpha, xrowsz, ydimsz, 14, 5);
 	//cleanup
 	destr_DoubleReader(mr);
 	free(alpha);

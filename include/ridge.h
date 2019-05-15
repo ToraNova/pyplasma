@@ -14,6 +14,10 @@
  */
 void ridge_test();
 
+/*
+ * This is to test the ARGOUT capability of swig numpy
+ */
+void ridge_range( double *alpha, int asize );
 
 /*
  * perform Ridge Regression on the input Dmat
