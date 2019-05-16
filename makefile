@@ -28,8 +28,12 @@ LD_LIBRARY_PATH ?= $(MKLROOT)/lib/intel64:$(PRTROOT)/lib
 # Compilation Flags and include/library specification
 ################################################################################
 CC       = gcc
-CFLAGS   = -std=c99 -O3 -Wall -Wno-unused-function -Wno-unsued-variable 
+CFLAGS   = -std=c99 -O3  
 LDFLAGS  = -fopenmp -fPIC
+
+# Target specific vars
+debug: 	CFLAGS += -DEDEBUG -Wall -Wno-unused-function -Wno-unsued-variable 
+re_ctest: CFLAGS += -DEDEBUG -Wall -Wno-unused-function -Wno-unsued-variable 
 
 ################################################################################
 # Library definitions
@@ -87,11 +91,12 @@ wrapper:
 
 # debugger for the makefile
 .phony: debug
-debug:
+debug: objs
 	@echo "Echoing make vars"
 	@echo $(SRCDIR)
 	@echo $(SOURCES)
 	@echo $(OBJECTS)
+	$(CC) $(LDFLAGS) -shared $(OBJECTS) $(PRONAME)_wrap.o -o _$(PRONAME).so $(LIBS)
 
 # Cleanup
 .phony: clean
@@ -106,7 +111,7 @@ clean:
 ################################################################################
 
 objs: iswig
-	$(CC) -c -fpic $(SOURCES) $(PRONAME)_wrap.c -I/usr/include/python3.6 $(INC) 
+	$(CC) -c -fpic $(SOURCES) $(CFLAGS) $(PRONAME)_wrap.c -I/usr/include/python3.6 $(INC)
 
 iswig:
 	swig -python $(PRONAME).i

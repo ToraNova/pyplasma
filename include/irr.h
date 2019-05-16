@@ -24,7 +24,7 @@ void test();
  */
 void argtest(int arg1);
 
-#define EDEBUG //comment to disable debugging prints
+//define EDEBUG //comment to disable debugging prints
 #define ELOGGI //comment to disable logging prints
 #define AUTONL //auto newline for debugging prints
 
@@ -32,8 +32,8 @@ void argtest(int arg1);
 #include <errno.h>
 #include <string.h>
 
+#define clean_errno() (errno == 0 ? "None" : strerror(errno))
 #ifdef EDEBUG //main block---------------------
-    #define clean_errno() (errno == 0 ? "None" : strerror(errno))
     #ifdef AUTONL
 	    #define debug(M, ...) fprintf(stderr, "DEBUG %s:%s:L%d: " M "\n", __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__)
     #else
@@ -42,7 +42,6 @@ void argtest(int arg1);
 #else
     //dummy defines
     #define debug(M, ...)
-    #define clean_errno()
 #endif //end main debug block
 
 #ifdef ELOGGI
