@@ -10,6 +10,8 @@
 PRONAME  := pyplasma
 # TODO: please create pyplasma.i swig interface file to
 # allow this project to compile
+# Using plasma lib version
+PLIBV := plasma-17.1
 
 # Directory specifications
 SRCDIR   := src
@@ -19,7 +21,7 @@ OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=%.o)
 # specify the library paths (the root dir of the lib projects)
 PRTROOT  ?= /home/cjason/library/prodtools
 MKLROOT  ?= /opt/intel/mkl
-PLSROOT  ?= /home/cjason/github/plasma-17.1
+PLSROOT  ?= $(PWD)/$(PLIBV)
 
 # rmb to export this in your env to run the program
 LD_LIBRARY_PATH ?= $(MKLROOT)/lib/intel64:$(PRTROOT)/lib
@@ -80,7 +82,7 @@ all: sharedlib
 # Working target
 # manual target, builds manually
 .phony: sharedlib 
-sharedlib: objs
+sharedlib: objs iclplasma
 	$(CC) $(LDFLAGS) -shared $(OBJECTS) $(PRONAME)_wrap.o -o _$(PRONAME).so $(LIBS)
 
 # wrapper target, builds the python wrapped version
@@ -91,7 +93,7 @@ wrapper:
 
 # debugger for the makefile
 .phony: debug
-debug: objs
+debug: objs iclplasma
 	@echo "Echoing make vars"
 	@echo $(SRCDIR)
 	@echo $(SOURCES)
@@ -105,6 +107,11 @@ clean:
 	rm -f ./*.o ./*.so ./*.pyc 
 	rm -f ./*.c ./*.cxx ./$(PRONAME).py
 	rm -f ctest
+	cd $(PLSROOT) && $(MAKE) clean
+
+.phony: iclplasma
+iclplasma :
+	cd $(PLSROOT) && $(MAKE)
 
 ################################################################################
 # Build targets

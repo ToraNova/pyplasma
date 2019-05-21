@@ -11,6 +11,7 @@ regression work.
 	prodtools (custom library)
 
 ### Math Kernel Library
+
 Please install intel's math kernel library (https://software.seek.intel.com/performance-libraries) 
 run install.sh (if you run it with root permission, it installs onto /opt, else it will install on 
 the user's home directory). The installation path is essential as we need to link the library later
@@ -26,11 +27,6 @@ Compile the custom library prodtools
 	git clone https://github.com/ToraNova/library
 	cd library/prodtools && ./cmake_build.sh
 
-Compile PLASMA library
-
-	curl -O https://bitbucket.org/icl/plasma/downloads/plasma-17.1.tar.gz
-
-
 Clone the repo (in a separate directory)
 
 	git clone https://github.com/ToraNova/pydistlearn
@@ -38,8 +34,14 @@ Clone the repo (in a separate directory)
 	cd pyplasma/plasma-17.1
 
 	# Edit the preset_env file to point to the root directory of MKL
+	vim preset_env.sh
 
 
 
 Version 1.0 - Git initialized and minimal version
 
+### Disclaimer !
+I take no credit for ICL's work. This is just a wrapper for their awesome library
+
+#### PLASMA's super fast linear algebra software library
+[https://bitbucket.org/icl/plasma/src/default/](https://bitbucket.org/icl/plasma/src/default/)
