@@ -7,7 +7,7 @@ export PRTROOT=/home/cjason/library/prodtools
 export PLSROOT=$(pwd)/plasma-17.1
 LD_LIBRARY_PATH=$PRTROOT/lib
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MKLROOT/lib/intel64
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/pyplasma
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)
 echo LD_LIBRARY_PATH current environment :
 echo $LD_LIBRARY_PATH
 echo MKL/PRT/PLS ROOTS:

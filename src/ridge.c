@@ -34,7 +34,7 @@
 /*
  *	PLASMA CORE BLAS includes
  */
-#include "core_lapack.h"
+//#include "core_lapack.h"
 #include "core_blas.h"
 #include "plasma.h"
 

@@ -43,7 +43,7 @@ int main(int argc, char *argv[]){
 
 	//reader
 	csvreader_DoubleReader *mr = constr_DoubleReader();
-	rc = DoubleReader_readcsv(mr, "/home/cjason/library/guides/python/pysample/datagen/data0.csv",0);
+	rc = DoubleReader_readcsv(mr, "sample/records_10k.csv",0);
 	debug("Read RC:%d",rc);
 	rrow = DoubleReader_getRowCount(mr);
 	rcol = DoubleReader_getColCount(mr);
@@ -66,12 +66,13 @@ int main(int argc, char *argv[]){
 			yvct,0, yelmsz, ydimsz,
 			lambda, 0,
                         alpha, 0);
-        suprint_doublearrST(alpha, xrowsz, ydimsz, 14, 5);
+        //suprint_doublearrST(alpha, xrowsz, ydimsz, 14, 5);
 	//cleanup
 	destr_DoubleReader(mr);
 	free(alpha);
 	free(yvct);
 	free(xmat);
+	printf("Ridge Test OK\n");
 
 	return 0;
 }

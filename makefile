@@ -8,10 +8,12 @@
 
 # project name
 PRONAME  := pyplasma
-# TODO: please create pyplasma.i swig interface file to
-# allow this project to compile
 # Using plasma lib version
 PLIBV := plasma-17.1
+
+# TODO:
+# configure python version, either 3.4, 3,5 or 3.6 (please use 3.6 if possible)
+PYTHV ?= python3.6
 
 # Directory specifications
 SRCDIR   := src
@@ -30,12 +32,12 @@ LD_LIBRARY_PATH ?= $(MKLROOT)/lib/intel64:$(PRTROOT)/lib
 # Compilation Flags and include/library specification
 ################################################################################
 CC       = gcc
-CFLAGS   = -std=c99 -O3  
+CFLAGS   = -std=c99 -O3 -DPLASMA_WITH_MKL -DMKL_Complex16="double _Complex" -DMKL_Complex8="float _Complex" 
 LDFLAGS  = -fopenmp -fPIC
 
 # Target specific vars
-debug: 	CFLAGS += -DEDEBUG -Wall -Wno-unused-function -Wno-unsued-variable 
-re_ctest: CFLAGS += -DEDEBUG -Wall -Wno-unused-function -Wno-unsued-variable 
+debug: 	CFLAGS  += -DEDEBUG -Wall -Wno-unused-function -Wno-unsued-variable 
+ctest:  LDFLAGS += -DEDEBUG -Wall -Wno-unused-function -Wno-unsued-variable 
 
 ################################################################################
 # Library definitions
@@ -73,27 +75,24 @@ INC      := \
 ################################################################################
 # Phony targets
 ################################################################################
+.phony: all sharedlib wrapper debug clean distclean runtest iclplasma
 
 # Default build
 # to suit deployment use cases
-.phony: all
 all: sharedlib 
 
 # Working target
 # manual target, builds manually
-.phony: sharedlib 
-sharedlib: objs iclplasma
+sharedlib: $(OBJECTS) $(PRONAME)_wrap.o iclplasma
 	$(CC) $(LDFLAGS) -shared $(OBJECTS) $(PRONAME)_wrap.o -o _$(PRONAME).so $(LIBS)
 
 # wrapper target, builds the python wrapped version
 # Warn: not used at the moment
-.phony: wrapper
 wrapper:
 	python3 src/setup.py build_ext --inplace
 
 # debugger for the makefile
-.phony: debug
-debug: objs iclplasma
+debug: $(OBJECTS) $(PRONAME)_wrap.o
 	@echo "Echoing make vars"
 	@echo $(SRCDIR)
 	@echo $(SOURCES)
@@ -101,15 +100,21 @@ debug: objs iclplasma
 	$(CC) $(LDFLAGS) -shared $(OBJECTS) $(PRONAME)_wrap.o -o _$(PRONAME).so $(LIBS)
 
 # Cleanup
-.phony: clean
 clean:
 	rm -rf __pycache__
 	rm -f ./*.o ./*.so ./*.pyc 
 	rm -f ./*.c ./*.cxx ./$(PRONAME).py
 	rm -f ctest
-	cd $(PLSROOT) && $(MAKE) clean
 
-.phony: iclplasma
+distclean: clean
+	cd $(PLSROOT) && $(MAKE) distclean
+
+runtest: 
+	rm -f ctest
+	$(MAKE) ctest
+	./ctest
+	python3 test/p_run.py
+
 iclplasma :
 	cd $(PLSROOT) && $(MAKE)
 
@@ -117,8 +122,11 @@ iclplasma :
 # Build targets
 ################################################################################
 
-objs: iswig
-	$(CC) -c -fpic $(SOURCES) $(CFLAGS) $(PRONAME)_wrap.c -I/usr/include/python3.6 $(INC)
+$(OBJECTS): %.o : $(SRCDIR)/%.c
+	$(CC) -c $(LDFLAGS) $(CFLAGS) -o $@ $(INC) $<
+
+$(PRONAME)_wrap.o: iswig
+	$(CC) -c $(LDFLAGS) $(CFLAGS) -o $@ -I/usr/include/$(PYTHV) $(INC) $(PRONAME)_wrap.c
 
 iswig:
 	swig -python $(PRONAME).i
@@ -127,12 +135,6 @@ iswig:
 # C Test routines
 # doesn't require any swig bullshit. just pure C to see if it really works
 ################################################################################
-ctest:
-	@echo "Compiling Tests in C"
-	$(CC) $(LDFLAGS) -o $@ $(SOURCES) $(CFLAGS) $(LIBS) $(INC) 
-
-# retest
-.phony: re_ctest
-re_ctest: clean ctest
-
+ctest: $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) test/c_run.c -o $@ $(LIBS) $(INC) 
 
