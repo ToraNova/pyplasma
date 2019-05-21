@@ -1,0 +1,6 @@
+/core_blas/*.o
+/lib/*.a
+/compute/*.o
+/control/*.o
+/test/*.o
+/test/test
